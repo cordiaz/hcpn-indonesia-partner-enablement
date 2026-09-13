@@ -1,0 +1,119 @@
+name: Capability Validation
+description: Request formal validation of a partner capability milestone or gate.
+title: "[Capability Validation] <partner-id> - <capability>"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form when a partner has completed a milestone and wants the capability to be reviewed or validated.
+
+        Validation should be evidence-based and aligned with the relevant partner track and Partner Readiness Framework.
+
+  - type: input
+    id: partner_id
+    attributes:
+      label: Partner ID
+      placeholder: partner-001
+    validations:
+      required: true
+
+  - type: dropdown
+    id: track
+    attributes:
+      label: Partner Track
+      options:
+        - Reseller
+        - Distributor
+        - Service Partner
+        - CSP
+    validations:
+      required: true
+
+  - type: input
+    id: capability
+    attributes:
+      label: Capability to Validate
+      placeholder: Sales Readiness, Channel Capability, Technical Delivery, Solution Design, etc.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: stage
+    attributes:
+      label: Program Stage
+      options:
+        - M1
+        - M2
+        - M3
+        - M4
+        - M5
+        - M6
+        - M7
+        - M8
+        - M9
+        - M10
+        - M11
+        - M12
+    validations:
+      required: true
+
+  - type: textarea
+    id: criteria
+    attributes:
+      label: Validation Criteria
+      description: List the milestone criteria expected to be met.
+      placeholder: |
+        - Training completed
+        - Assignment submitted
+        - Assessment passed
+        - Demo or presentation delivered
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence Submitted
+      description: Add public-safe evidence references only.
+      placeholder: Repository links, approved screenshots, presentation links, assessment summary, demo reference, etc.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: evidence_quality
+    attributes:
+      label: Proposed Evidence Quality
+      description: Use the framework scale where applicable.
+      options:
+        - E1 - Self-Declared
+        - E2 - Documented
+        - E3 - Reviewed
+        - E4 - Demonstrated
+        - E5 - Business Validated
+    validations:
+      required: true
+
+  - type: textarea
+    id: reviewer_notes
+    attributes:
+      label: Reviewer Notes
+      description: Leave blank when initially submitted; reviewer may use this section when updating the issue.
+
+  - type: dropdown
+    id: requested_decision
+    attributes:
+      label: Requested Decision
+      options:
+        - Review Required
+        - Validate Capability
+        - Re-assessment Required
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: disclosure
+    attributes:
+      label: Public Disclosure Confirmation
+      options:
+        - label: I confirm that all submitted evidence is suitable for this public repository and contains no restricted information.
+          required: true
