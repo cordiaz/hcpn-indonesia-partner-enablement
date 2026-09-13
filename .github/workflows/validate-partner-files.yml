@@ -12,6 +12,7 @@ on:
     paths:
       - 'partners/**.md'
       - 'scripts/validate_partner_files.py'
+      - '.github/workflows/validate-partner-files.yml'
 
 permissions:
   contents: read
