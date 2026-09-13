@@ -1,0 +1,130 @@
+name: Blocker Escalation
+description: Escalate a blocker that is preventing partner progress or milestone completion.
+title: "[Blocker] <partner-id> - <short summary>"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form when a blocker cannot be resolved within the normal monthly enablement cycle.
+
+        Keep all descriptions public-safe. Do not publish customer-confidential, Huawei-confidential, credential, pricing, contract, or sensitive commercial information.
+
+  - type: input
+    id: partner_id
+    attributes:
+      label: Partner ID
+      placeholder: partner-001
+    validations:
+      required: true
+
+  - type: dropdown
+    id: track
+    attributes:
+      label: Partner Track
+      options:
+        - Reseller
+        - Distributor
+        - Service Partner
+        - CSP
+    validations:
+      required: true
+
+  - type: dropdown
+    id: stage
+    attributes:
+      label: Current Stage
+      options:
+        - M1
+        - M2
+        - M3
+        - M4
+        - M5
+        - M6
+        - M7
+        - M8
+        - M9
+        - M10
+        - M11
+        - M12
+    validations:
+      required: true
+
+  - type: dropdown
+    id: blocker_type
+    attributes:
+      label: Blocker Type
+      options:
+        - Training / Schedule
+        - Technical
+        - Lab / Environment
+        - Assessment / Validation
+        - Certification
+        - Resource / Staffing
+        - Partner Process
+        - Customer Engagement
+        - Governance / Approval
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - Low - progress can continue
+        - Medium - milestone at risk
+        - High - milestone blocked
+        - Critical - multiple milestones or program outcome at risk
+    validations:
+      required: true
+
+  - type: textarea
+    id: blocker
+    attributes:
+      label: Blocker Description
+      description: Describe what is blocked and why, using public-safe wording.
+    validations:
+      required: true
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impact
+      description: Explain which milestone, capability, or timeline is affected.
+    validations:
+      required: true
+
+  - type: textarea
+    id: attempted_actions
+    attributes:
+      label: Actions Already Taken
+      description: List troubleshooting or mitigation already attempted.
+      placeholder: |
+        - Contacted trainer
+        - Retried lab
+        - Reviewed prerequisites
+    validations:
+      required: true
+
+  - type: textarea
+    id: support_required
+    attributes:
+      label: Support Required
+      description: State the decision, resource, review, or technical support needed.
+    validations:
+      required: true
+
+  - type: input
+    id: target_resolution
+    attributes:
+      label: Target Resolution Date
+      placeholder: YYYY-MM-DD
+
+  - type: checkboxes
+    id: disclosure
+    attributes:
+      label: Public Disclosure Confirmation
+      options:
+        - label: I confirm that this escalation contains no restricted or confidential information.
+          required: true
