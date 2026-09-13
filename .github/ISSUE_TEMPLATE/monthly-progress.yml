@@ -1,0 +1,136 @@
+name: Monthly Partner Progress
+description: Submit a structured monthly HCPN partner progress update.
+title: "[Monthly Progress] <partner-id> - <month>"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for monthly partner progress updates.
+
+        Do not include customer-confidential information, Huawei-confidential information, credentials, pricing, pipeline value, revenue figures, personal exam data, or other restricted information.
+
+  - type: input
+    id: partner_id
+    attributes:
+      label: Partner ID
+      description: Use the public-safe partner identifier used in the partners/ directory.
+      placeholder: partner-001
+    validations:
+      required: true
+
+  - type: dropdown
+    id: track
+    attributes:
+      label: Partner Track
+      options:
+        - Reseller
+        - Distributor
+        - Service Partner
+        - CSP
+    validations:
+      required: true
+
+  - type: dropdown
+    id: stage
+    attributes:
+      label: Current Stage
+      options:
+        - M1 - Foundation
+        - M2 - Knowledge
+        - M3 - Capability Development
+        - M4 - Practice
+        - M5 - Activation
+        - M6 - Validation
+        - M7 - Advanced Capability
+        - M8 - Specialization
+        - M9 - Industry Enablement
+        - M10 - Customer Engagement
+        - M11 - PoC and GTM
+        - M12 - Annual Review
+    validations:
+      required: true
+
+  - type: dropdown
+    id: status
+    attributes:
+      label: Overall Status
+      options:
+        - Not Started
+        - In Progress
+        - Completed
+        - Validated
+        - Blocked
+    validations:
+      required: true
+
+  - type: textarea
+    id: completed
+    attributes:
+      label: Completed This Month
+      description: Summarize learning, practice, assignments, assessments, or activation activities completed this month.
+      placeholder: |
+        - Completed ...
+        - Submitted ...
+        - Validated ...
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: monthly_cycle
+    attributes:
+      label: Monthly Enablement Cycle
+      options:
+        - label: Learn completed
+        - label: Practice completed
+        - label: Apply completed
+        - label: Validate completed
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Public-Safe Evidence
+      description: Add links or references only to evidence approved for public disclosure.
+      placeholder: Public-safe links, repository files, presentation references, or approved summaries.
+
+  - type: textarea
+    id: blockers
+    attributes:
+      label: Blockers or Risks
+      description: Describe blockers without exposing confidential information.
+      placeholder: None, or describe the blocker and its impact.
+
+  - type: textarea
+    id: support
+    attributes:
+      label: Support Required
+      description: State support needed from the program owner, track owner, trainer, reviewer, or principal team.
+      placeholder: Training support, architecture review, assessment review, scheduling, etc.
+
+  - type: textarea
+    id: next_milestone
+    attributes:
+      label: Next Milestone
+      description: Define the next measurable milestone.
+      placeholder: Complete M3 discovery simulation and submit solution mapping.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: readiness
+    attributes:
+      label: Current Readiness Level
+      options:
+        - Foundation
+        - Developing
+        - Ready
+        - Advanced
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: disclosure
+    attributes:
+      label: Public Disclosure Confirmation
+      options:
+        - label: I confirm that this update contains no customer-confidential, Huawei-confidential, credential, pricing, revenue, pipeline-value, or restricted personal information.
+          required: true
