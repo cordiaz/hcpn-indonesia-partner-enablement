@@ -1,0 +1,68 @@
+name: Validate Partner Files
+
+on:
+  pull_request:
+    paths:
+      - 'partners/**.md'
+      - 'scripts/validate_partner_files.py'
+      - '.github/workflows/validate-partner-files.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'partners/**.md'
+      - 'scripts/validate_partner_files.py'
+
+permissions:
+  contents: read
+
+jobs:
+  validate-partner-files:
+    name: Partner Structure Validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Determine partner files to validate
+        id: files
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            BASE_SHA="${{ github.event.pull_request.base.sha }}"
+            HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+            FILES=$(git diff --name-only --diff-filter=ACMR "$BASE_SHA" "$HEAD_SHA" -- 'partners/*.md' | grep -v '^partners/README.md$' || true)
+          else
+            FILES=$(find partners -maxdepth 1 -type f -name '*.md' ! -name 'README.md' -print | sort)
+          fi
+
+          echo "Changed partner files:"
+          printf '%s\n' "$FILES"
+
+          {
+            echo 'files<<EOF'
+            printf '%s\n' "$FILES"
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Validate partner structure
+        if: steps.files.outputs.files != ''
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -t FILES <<< "${{ steps.files.outputs.files }}"
+          python scripts/validate_partner_files.py "${FILES[@]}"
+
+      - name: No partner files changed
+        if: steps.files.outputs.files == ''
+        run: echo 'No partner progress files require validation.'
