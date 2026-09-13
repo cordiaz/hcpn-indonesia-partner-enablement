@@ -1,0 +1,49 @@
+name: Validate Pull Request Policy
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  validate-pr-policy:
+    name: Pull Request Policy Validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Detect changed partner files
+        id: partner_files
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+          FILES=$(git diff --name-only --diff-filter=ACMR "$BASE_SHA" "$HEAD_SHA" -- 'partners/*.md' | grep -v '^partners/README.md$' || true)
+
+          echo "Partner files changed:"
+          printf '%s\n' "$FILES"
+
+          {
+            echo 'files<<EOF'
+            printf '%s\n' "$FILES"
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Validate PR template and governance confirmations
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+          CHANGED_PARTNER_FILES: ${{ steps.partner_files.outputs.files }}
+        run: python scripts/validate_pr_body.py
